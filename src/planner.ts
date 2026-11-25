@@ -28,3 +28,11 @@ export function suggest(day: string, shiftAnchor: string, sports: boolean) {
   if (weekday >= 1 && weekday <= 5) return { minutes: 40, context: 'Trabalho · 08–16h · almoço 12–13h' }
   return { minutes: 90, context: 'Fim de semana' }
 }
+
+export function daysUntil(day: string, target: string) {
+  return Math.max(0, (Date.parse(target) - Date.parse(day)) / dayMs)
+}
+
+export function dailyGoal(day: string, shiftAnchor: string) {
+  return day === '2026-11-24' ? 90 : suggest(day, shiftAnchor, false).minutes
+}

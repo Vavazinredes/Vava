@@ -8,7 +8,7 @@ export function summarize(events: StudyEvent[], today: string) {
   for (const event of ordered) {
     if (event.kind === 'attendance') {
       if (event.status !== 'present' || !days.has(event.day)) days.set(event.day, event)
-    } else {
+    } else if (event.kind === 'assessment') {
       const previous = assessments.get(event.skill)
       if (!previous || previous.day <= event.day) assessments.set(event.skill, event)
     }

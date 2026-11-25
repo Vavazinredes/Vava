@@ -39,3 +39,21 @@ assert.equal(acceptsAnswer(1, 'venis'), false)
 assert.equal(presenceId(day), '706f7274-656e-8000-8000-000020261124')
 assert.notEqual(presenceId(day), presenceId('2026-11-25'))
 console.log('18 verificações de domínio aprovadas.')
+
+import { activityId } from '../src/activities'
+import { dailyGoal, daysUntil, moveDay } from '../src/planner'
+
+const activity: StudyEvent = {
+  kind: 'activity', day, activity: 'grammar', source: 'teacher',
+  id: activityId(day, 'grammar'), recordedAt: day + 'T17:00:00.000Z',
+}
+const retained = parseBackup({ version: 1, events: [present, attendance(5, 'incomplete', 75), activity, activity] })
+assert.equal(retained.length, 3)
+assert.equal(summarize(retained, day).minutes, 75)
+assert.equal(summarize(retained, day).attendance, 1)
+assert.equal(summarize(retained, day).completed, 0)
+assert.equal(dailyGoal(day, ''), 90)
+assert.equal(daysUntil(day, moveDay), 31)
+assert.throws(() => parseBackup({ version: 1, events: [{ ...activity, activity: 'listening' }] }))
+assert.throws(() => parseBackup({ version: 1, events: [{ ...activity, source: 'unknown' }] }))
+assert.notEqual(activityId(day, 'grammar'), activityId('2026-11-25', 'grammar'))

@@ -3,7 +3,35 @@
   "version": "3.0.0",
   "private": true,
   "type": "module",
-  "scripts": {"dev":"vite","build":"tsc --noEmit && vite build","test":"vite-node tests/domain.ts","preview":"vite preview"},
-  "dependencies": {"@supabase/supabase-js":"2.57.4","clsx":"2.1.1","react":"19.1.1","react-dom":"19.1.1","recharts":"^3.8.2","react-is":"19.1.1","tailwind-merge":"3.3.1"},
-  "devDependencies": {"@tailwindcss/vite":"4.1.13","@types/react":"19.1.13","@types/react-dom":"19.1.9","@vitejs/plugin-react":"4.7.0","tailwindcss":"4.1.13","typescript":"5.9.2","vite":"6.4.6","vite-node":"3.2.4","vite-plugin-pwa":"1.0.3"}
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "test": "vite-node tests/domain.ts",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.57.4",
+    "clsx": "2.1.1",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "react-is": "19.1.1",
+    "recharts": "^3.8.2",
+    "tailwind-merge": "3.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.1.13",
+    "@types/react": "19.1.13",
+    "@types/react-dom": "19.1.9",
+    "@vitejs/plugin-react": "4.7.0",
+    "tailwindcss": "4.1.13",
+    "typescript": "5.9.2",
+    "vite": "6.4.6",
+    "vite-node": "3.2.4",
+    "vite-plugin-pwa": "1.0.3"
+  },
+  "overrides": {
+    "workbox-build": {
+      "glob": "14.0.2"
+    }
+  }
 }

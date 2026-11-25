@@ -1,3 +1,4 @@
+import { activities, activityId, type Activity } from './activities'
 export const skills = ['Gramática', 'Vocabulário', 'Escuta', 'Fala', 'Leitura', 'Escrita'] as const
 export const statuses = ['present', 'completed', 'incomplete'] as const
 export type Status = typeof statuses[number]
@@ -9,6 +10,7 @@ export type StudyEvent = {
 } & (
   | { kind: 'attendance'; status: Status; minutes: number }
   | { kind: 'assessment'; skill: Skill; score: number }
+  | { kind: 'activity'; activity: Activity; source: 'self' | 'teacher' }
 )
 
 export function presenceId(day: string) {
@@ -38,6 +40,9 @@ export function parseBackup(input: unknown): StudyEvent[] {
     } else if (value.kind === 'assessment' && skills.includes(value.skill) &&
         Number.isInteger(value.score) && value.score >= 0 && value.score <= 100) {
       events.push({ ...base, kind: 'assessment', skill: value.skill, score: value.score })
+    } else if (value.kind === 'activity' && Object.hasOwn(activities, value.activity) &&
+        (value.source === 'self' || value.source === 'teacher') && value.id === activityId(value.day, value.activity)) {
+      events.push({ ...base, kind: 'activity', activity: value.activity, source: value.source })
     } else throw Error('Evento com registro ou avaliação inválida.')
   }
   return mergeEvents([], events)
